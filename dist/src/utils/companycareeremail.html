@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Received</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .header img {
+            max-width: 120px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 20px;
+            color: #333333;
+        }
+
+        .content h3 {
+            font-size: 23px;
+            color: #4CAF50;
+            margin-top: 0;
+        }
+
+        .content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0 0 15px;
+        }
+
+        .content strong {
+            color: #4CAF50;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: #888888;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 20px;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <div class="header">
+            <img src="https://www.603thecoworkingspace.com/logo/logo.png" alt="603 Coworking Space Logo">
+        </div>
+        <div class="content">
+            <h3><strong>New Job Application Received!</strong></h3>
+            <p>A candidate has applied for a position at 603 The Coworking Space. Please review the details below:</p>
+            <ul style="list-style-type: none; padding: 0; font-size: 16px;">
+                <li><strong>Name:</strong> {{name}}</li>
+                <li><strong>Email:</strong> {{email}}</li>
+                <li><strong>Phone:</strong> {{phone}}</li>
+                <li><strong>Position Applied For:</strong> {{position}}</li>
+                <li><strong>Experience Level:</strong> {{experience}}</li>
+            </ul>
+            <p>Please contact the candidate at the provided details for further processing.</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2024 603 The Coworking Space India. All rights reserved. | <a href="https://www.603thecoworkingspace.com">Visit our website</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

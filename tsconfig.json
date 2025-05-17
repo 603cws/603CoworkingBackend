@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "CommonJS",
+    "rootDir": "./",  // Include all source files, adjust as needed
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*",
+    "api/**/*"   // Include all files in the src and api directories
+, "index.ts"  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

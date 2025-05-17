@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddleware_1 = require("../middlewares/authMiddleware");
+const creditController_1 = require("../controllers/creditController");
+const router = (0, express_1.Router)();
+router.post("/", authMiddleware_1.protect, creditController_1.createCoinPurchase);
+router.get("/getcreditdetails", authMiddleware_1.protect, creditController_1.getcreditsdetails);
+router.get("/", authMiddleware_1.protect, creditController_1.getAllCoinPurchases);
+router.get("/:id", authMiddleware_1.protect, creditController_1.getCoinPurchaseByUserId);
+router.put("/:id", authMiddleware_1.protect, creditController_1.updateCoinPurchaseStatus);
+router.delete("/:id", authMiddleware_1.protect, creditController_1.deleteCoinPurchase);
+exports.default = router;
