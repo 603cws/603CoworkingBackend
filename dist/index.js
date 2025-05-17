@@ -24,22 +24,23 @@ const axios = require('axios');
 //import order route
 const OrderRoutes_1 = __importDefault(require("./src/routes/OrderRoutes"));
 //morgan
-const morgan = require('morgan');
-//helmet
-const helmet = require('helmet');
+// const morgan = require('morgan');
+// //helmet
+// const helmet = require('helmet');
 //rate limiter
-const rateLimit = require('express-rate-limit');
+// const rateLimit = require('express-rate-limit');
 const app = (0, express_1.default)();
 app.use((0, cookie_parser_1.default)());
-app.use(morgan('dev'));
-app.use(helmet());
+// app.use(morgan('dev'));
+// app.use(helmet());
 //limit request from same api
-const limiter = rateLimit({
-    max: 100, //100 req per hour
-    windowMs: 15 * 60 * 1000,
-    message: 'Too many requests from this IP,please try again in an hour',
-});
-app.use('/api', limiter);
+// const limiter = rateLimit({
+//   max: 100, //100 req per hour
+//   windowMs: 15 * 60 * 1000,
+//   message: 'Too many requests from this IP,please try again in an hour',
+// });
+// app.use('/api', limiter);
+// 603-coworking-backend.vercel.app
 const port = process.env.PORT || 3000;
 // dotenv.config({ path: "backend/.env" });
 dotenv_1.default.config({ path: './.env' });
@@ -79,6 +80,8 @@ app.use('/api/v1/zoho', zohoRoutes_1.default);
 app.use('/api/v1/coupon', couponRoutes_1.default);
 //payment route
 app.use('/api/v1/order', OrderRoutes_1.default);
+//temp data check
+// app.use('/api/v1/marketdata',)
 app.get('/', (req, res) => {
     console.log('Root URL accessed');
     res.send('Welcome to the API');

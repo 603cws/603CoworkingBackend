@@ -3,7 +3,7 @@ import { UserModel } from '../models/user.model';
 import { loginInputs } from '../zodTypes/types';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import cookie from 'cookie';
+// import cookie from 'cookie';
 
 export const login = async (req: Request, res: Response) => {
   const { usernameOrEmail, password } = req.body;
@@ -35,22 +35,24 @@ export const login = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { name: user.companyName, id: user._id, role: user.role },
       secretKey,
-      { expiresIn: '1h' }
+      { expiresIn: '12h' }
     );
 
     // Set the JWT token as a cookie for localhost
-    res.setHeader(
-      'Set-Cookie',
-      cookie.serialize('token', token, {
-        httpOnly: true,
-        maxAge: 3600,
-        sameSite: 'none', // 'lax' is generally safe for CSRF protection
-        secure: true, // Ensure this is served over HTTPS in production
-        path: '/',
-        domain: '.603-coworking-backend.vercel.app',
-      })
-    );
+    // res.setHeader(
+    //   'Set-Cookie',
+    //   cookie.serialize('token', token, {
+    //     httpOnly: true,
+    //     maxAge: 3600,
+    //     sameSite: 'none', // 'lax' is generally safe for CSRF protection
+    //     secure: true, // Ensure this is served over HTTPS in production
+    //     path: '/',
+    //     domain: '.603-coworking-backend.vercel.app',
+    //   })
+    // );
 
+    // return res.status(200).json({ msg: 'User signed in', user, token });
+    // ✅ Send token in JSON instead of setting cookie
     return res.status(200).json({ msg: 'User signed in', user, token });
   } catch (e) {
     console.error(e);
@@ -62,17 +64,17 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   try {
-    res.setHeader(
-      'Set-Cookie',
-      cookie.serialize('token', '', {
-        httpOnly: true,
-        expires: new Date(0), // Expire the cookie
-        sameSite: 'none', // 'lax' is generally safe for CSRF protection
-        secure: true, // Ensure this is served over HTTPS in production
-        path: '/', // Match this with logout
-        domain: '.603-coworking-backend.vercel.app',
-      })
-    );
+    // res.setHeader(
+    //   'Set-Cookie',
+    //   cookie.serialize('token', '', {
+    //     httpOnly: true,
+    //     expires: new Date(0), // Expire the cookie
+    //     sameSite: 'none', // 'lax' is generally safe for CSRF protection
+    //     secure: true, // Ensure this is served over HTTPS in production
+    //     path: '/', // Match this with logout
+    //     domain: '.603-coworking-backend.vercel.app',
+    //   })
+    // );
     return res.status(200).json({ msg: 'User logged out successfully' });
   } catch (e) {
     console.error(e);
@@ -108,25 +110,25 @@ export const adminlogin = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { name: user.companyName, id: user._id, role: user.role },
       secretKey,
-      { expiresIn: '1h' }
+      { expiresIn: '24h' }
     );
 
     // Set the JWT token as a cookie for localhost
-    res.setHeader(
-      'Set-Cookie',
-      cookie.serialize('token', token, {
-        httpOnly: true,
-        maxAge: 3600, // 1 hour
-        sameSite: 'none', // 'lax' is generally safe for CSRF protection
-        secure: true, // Ensure this is served over HTTPS in production
-        path: '/', // Match this with logout
-        domain: '.603-coworking-backend.vercel.app',
-      })
-    );
+    // res.setHeader(
+    //   'Set-Cookie',
+    //   cookie.serialize('token', token, {
+    //     httpOnly: true,
+    //     maxAge: 3600, // 1 hour
+    //     sameSite: 'none', // 'lax' is generally safe for CSRF protection
+    //     secure: true, // Ensure this is served over HTTPS in production
+    //     path: '/', // Match this with logout
+    //     domain: '.603-coworking-backend.vercel.app',
+    //   })
+    // );
 
     return res
       .status(200)
-      .json({ msg: 'Admin signed in', user: user.companyName });
+      .json({ msg: 'Admin signed in', user: user.companyName, token });
   } catch (e) {
     console.error(e);
     return res

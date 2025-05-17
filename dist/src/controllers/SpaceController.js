@@ -9,7 +9,7 @@ const getAllSpaces = async (req, res) => {
         res.status(200).json(spaces);
     }
     catch (error) {
-        res.status(500).json({ message: "Error fetching spaces", error });
+        res.status(500).json({ message: 'Error fetching spaces', error });
     }
 };
 exports.getAllSpaces = getAllSpaces;
@@ -18,12 +18,12 @@ const getSpacebyname = async (req, res) => {
     try {
         const space = await space_model_1.SpaceModel.findOne({ name: name });
         if (!space) {
-            return res.status(404).json({ message: "Space not found" });
+            return res.status(404).json({ message: 'Space not found' });
         }
         res.status(200).json(space);
     }
     catch (error) {
-        res.status(500).json({ message: "Error fetching space", error });
+        res.status(500).json({ message: 'Error fetching space', error });
     }
 };
 exports.getSpacebyname = getSpacebyname;
@@ -32,12 +32,12 @@ const getSpaceById = async (req, res) => {
     try {
         const space = await space_model_1.SpaceModel.findById(spaceId);
         if (!space) {
-            return res.status(404).json({ message: "Space not found" });
+            return res.status(404).json({ message: 'Space not found' });
         }
         res.status(200).json(space);
     }
     catch (error) {
-        res.status(500).json({ message: "Error fetching space", error });
+        res.status(500).json({ message: 'Error fetching space', error });
     }
 };
 exports.getSpaceById = getSpaceById;
@@ -51,29 +51,37 @@ const createSpace = async (req, res) => {
             roomtype,
             description,
             amenities,
-            capacity
+            capacity,
         });
         const space = await newSpace.save();
         res.status(201).json(space);
     }
     catch (error) {
-        res.status(500).json({ message: "Error creating space", error });
+        res.status(500).json({ message: 'Error creating space', error });
     }
 };
 exports.createSpace = createSpace;
 // Update a space
 const updateSpace = async (req, res) => {
     const spaceId = req.params.id;
-    const { name, location, description, amenities, capacity, hourly_coinRate, daily_coinRate } = req.body;
+    const { name, location, description, amenities, capacity, hourly_coinRate, daily_coinRate, } = req.body;
     try {
-        const updatedSpace = await space_model_1.SpaceModel.findByIdAndUpdate(spaceId, { name, location, description, amenities, capacity, hourly_coinRate, daily_coinRate }, { new: true, runValidators: true });
+        const updatedSpace = await space_model_1.SpaceModel.findByIdAndUpdate(spaceId, {
+            name,
+            location,
+            description,
+            amenities,
+            capacity,
+            hourly_coinRate,
+            daily_coinRate,
+        }, { new: true, runValidators: true });
         if (!updatedSpace) {
-            return res.status(404).json({ message: "Space not found" });
+            return res.status(404).json({ message: 'Space not found' });
         }
         res.status(200).json(updatedSpace);
     }
     catch (error) {
-        res.status(500).json({ message: "Error updating space", error });
+        res.status(500).json({ message: 'Error updating space', error });
     }
 };
 exports.updateSpace = updateSpace;
@@ -83,12 +91,12 @@ const deleteSpace = async (req, res) => {
     try {
         const deletedSpace = await space_model_1.SpaceModel.findByIdAndDelete(spaceId);
         if (!deletedSpace) {
-            return res.status(404).json({ message: "Space not found" });
+            return res.status(404).json({ message: 'Space not found' });
         }
-        res.status(200).json({ message: "Space deleted successfully" });
+        res.status(200).json({ message: 'Space deleted successfully' });
     }
     catch (error) {
-        res.status(500).json({ message: "Error deleting space", error });
+        res.status(500).json({ message: 'Error deleting space', error });
     }
 };
 exports.deleteSpace = deleteSpace;
