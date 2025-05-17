@@ -290,7 +290,7 @@ const processDaypasses = async (
 //   'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status';
 
 // // const redirectUrl = 'http://127.0.0.1:3000/api/v1/order/status';
-// const redirectUrl = 'https://603-bcakend-new.vercel.app/api/v1/order/status';
+// const redirectUrl = 'https://603-coworking-backend.vercel.app/api/v1/order/status';
 
 // // const successUrl = 'http://localhost:5173/dashboard';
 // const successUrl = 'https://www.603thecoworkingspace.com/dashboard';
@@ -304,7 +304,8 @@ const MERCHANT_KEY = '1ffdba94-b557-45f4-8b17-3d7964082aa9';
 const MERCHANT_ID = 'M224FPWUGXCXH';
 const MERCHANT_BASE_URL = 'https://api.phonepe.com/apis/hermes/pg/v1/pay';
 const MERCHANT_STATUS_URL = 'https://api.phonepe.com/apis/hermes/pg/v1/status';
-const redirectUrl = 'https://603-bcakend-new.vercel.app/api/v1/order/status';
+const redirectUrl =
+  'https://603-coworking-backend.vercel.app/api/v1/order/status';
 const refundUrl = `https://api.phonepe.com/apis/hermes/pg/v1/refund`;
 const successUrl = 'https://www.603thecoworkingspace.com/dashboard';
 const failureUrl = 'https://www.603thecoworkingspace.com/payment';
@@ -534,7 +535,7 @@ export const refund = async (req: Request, res: Response) => {
     merchantTransactionId: refundTransactionID,
     amount: refundAmount,
     callbackUrl:
-      'https://603-bcakend-new.vercel.app/api/v1/order/refundcallback',
+      'https://603-coworking-backend.vercel.app/api/v1/order/refundcallback',
   };
 
   const payload = Buffer.from(JSON.stringify(paymentPayload)).toString(
