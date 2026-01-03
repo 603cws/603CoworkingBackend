@@ -4,12 +4,9 @@ import { string } from 'zod';
 
 import { UserModel } from '../models/user.model';
 
-// const access_token = require("./../../index");
-
-//field in zoho crm that diffrenciates that it is a website lead or manually created lead
-// websiteLead
-
-const ZOHO_TOKEN_URL = 'https://accounts.zoho.com/oauth/v2/token';
+const ZOHO_TOKEN_URL = process.env.ZOHO_TOKEN_URL
+  ? process.env.ZOHO_TOKEN_URL
+  : '';
 
 let {
   ZOHO_CLIENT_ID,
@@ -42,9 +39,6 @@ const getCurrentDateTime = async () => {
     resolve({ year, month, date, hours, minutes, seconds });
   });
 };
-
-// let access_token =
-//   "1000.e6bfe755051b80fef105b6815e0307c0.13bd1cdd2c1ae762d59ba693ae5cb542";
 
 // Function to exchange the authorization code for an access token
 const exchangeAuthorizationCode = async () => {
@@ -110,13 +104,6 @@ const getAccessToken = async () => {
   }
 };
 
-// setInterval(async () => {
-//   access_token = await getAccessToken();
-// }, 55 * 60 * 1000); // Refresh every 55 minutes
-
-// LAYOUT ID  3269090000016654005
-
-// Function to use the access token in an API request to Zoho CRM for contact form
 export const createLead = async (data: any) => {
   try {
     const accessToken = await getAccessToken();
@@ -206,10 +193,6 @@ export const createLeadPopupForm = async (data: any) => {
 
     //split username
     const [firstname, lastname] = name.split(' ');
-    //date
-
-    // let Date_Time_4 = `'${year}-${month}-${date}T${hours}:${minutes}:${seconds}+06:00'`;
-    // console.log(Date_Time_4);
 
     const zohoCRMUrl = 'https://www.zohoapis.com/crm/v2/Leads';
     const leadData = {

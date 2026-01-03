@@ -87,11 +87,11 @@ app.get('/', (req, res) => {
     res.send('Welcome to the API');
 });
 // Catch-all route for undefined routes
-app.use((req, res) => {
+app.use('*', (req, res) => {
     console.log('Undefined route accessed:', req.originalUrl);
     res.status(404).send('Route not found');
 });
-const ZOHO_TOKEN_URL = 'https://accounts.zoho.com/oauth/v2/token';
+const ZOHO_TOKEN_URL = process.env.ZOHO_TOKEN_URL;
 let { ZOHO_CLIENT_ID, ZOHO_CLIENT_SECRET, ZOHO_REDIRECT_URL, ZOHO_AUTHORIZATION_CODE, ZOHO_REFRESH_TOKEN, } = process.env;
 // let access_token =
 //   "1000.e6bfe755051b80fef105b6815e0307c0.13bd1cdd2c1ae762d59ba693ae5cb542";

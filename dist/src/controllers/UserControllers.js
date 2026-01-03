@@ -14,8 +14,6 @@ const emailUtils_1 = require("../utils/emailUtils");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const zohoController_1 = require("./zohoController");
-// import { decode } from 'punycode';
-// import { log } from 'console';
 const createuser = async (req, res) => {
     const body = req.body;
     const validate = types_1.createuserInputs.safeParse(body);
@@ -70,71 +68,6 @@ const createuser = async (req, res) => {
     }
 };
 exports.createuser = createuser;
-// export const createuser = async (req: Request, res: Response) => {
-//   const body = req.body;
-//   const validate = createuserInputs.safeParse(body);
-//   if (!validate.success) {
-//     return res.status(400).json({ msg: 'Invalid Inputs' });
-//   }
-//   try {
-//     const {
-//       companyName,
-//       email,
-//       password,
-//       phone,
-//       username,
-//       country,
-//       state,
-//       zipcode,
-//       city,
-//       monthlycredits,
-//       location,
-//       member,
-//     } = body;
-//     const usernameExists = await UserModel.findOne({ username });
-//     if (usernameExists) {
-//       return res.status(409).json({ msg: 'Username exists' });
-//     }
-//     const emailExists = await UserModel.findOne({ email });
-//     if (emailExists) {
-//       return res.status(409).json({ msg: 'Email exists' });
-//     }
-//     // Hash the password
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const user = await UserModel.create({
-//       companyName,
-//       username,
-//       email,
-//       password: hashedPassword,
-//       phone,
-//       role: 'user',
-//       kyc: false,
-//       country,
-//       state,
-//       zipcode,
-//       location,
-//       city,
-//       creditsleft: monthlycredits,
-//       monthlycredits,
-//       member,
-//       createdAt: Date.now(),
-//     });
-//     const secretKey = process.env.SECRETKEY;
-//     if (!secretKey) {
-//       console.error('JWT secret key is not defined');
-//       return res.status(500).json({ msg: 'JWT secret key is not defined' });
-//     }
-//     const token = jwt.sign({ id: user._id, companyName }, secretKey, {
-//       expiresIn: '1h',
-//     });
-//     return res
-//       .status(201)
-//       .json({ msg: 'User created', jwt: token, user: user.companyName });
-//   } catch (e) {
-//     console.error(e);
-//     res.status(500).json({ msg: 'Internal server error1' });
-//   }
-// };
 // Get user's details
 const getuserdetailsorig = async (req, res) => {
     const secretKey = process.env.SECRETKEY;
@@ -166,31 +99,6 @@ const getuserdetailsorig = async (req, res) => {
     }
 };
 exports.getuserdetailsorig = getuserdetailsorig;
-// export const getuserdetailsorig = async (req: Request, res: Response) => {
-//   const secretKey = process.env.SECRETKEY;
-//   if (!secretKey) {
-//     console.error('JWT secret key is not defined');
-//     return res.status(500).json({ msg: 'JWT secret key is not defined' });
-//   }
-//   try {
-//     const cookies = cookie.parse(req.headers.cookie || '');
-//     console.log('jsdodckj   ', req.headers);
-//     const token = cookies.token;
-//     console.log(token);
-//     const decoded: any = jwt.verify(token, secretKey);
-//     console.log('Decoded token:', decoded);
-//     const id = decoded.id;
-//     console.log('User ID from token:', id);
-//     const user = await UserModel.findById(id);
-//     console.log('User from database:', user);
-//     if (!user) {
-//       return res.status(404).json({ msg: 'No such user' });
-//     }
-//     res.status(200).json({ user: user });
-//   } catch (e) {
-//     res.status(500).json({ msg: 'Internal server error2' });
-//   }
-// };
 const getuserdetails = async (req, res) => {
     const secretKey = process.env.SECRETKEY;
     if (!secretKey) {
@@ -252,62 +160,6 @@ const checkauth = async (req, res) => {
     }
 };
 exports.checkauth = checkauth;
-// export const getuserdetails = async (req: Request, res: Response) => {
-//   const secretKey = process.env.SECRETKEY;
-//   if (!secretKey) {
-//     console.error('JWT secret key is not defined');
-//     return res.status(500).json({ msg: 'JWT secret key is not defined' });
-//   }
-//   try {
-//     const cookies = cookie.parse(req.headers.cookie || '');
-//     console.log('jsdodckj   ', req.headers);
-//     const token = cookies.token;
-//     console.log(token);
-//     if (!token) {
-//       return res.status(401).json({ msg: 'Token is missing' });
-//     }
-//     const decoded: any = jwt.verify(token, secretKey);
-//     console.log('Decoded token:', decoded);
-//     const id = decoded.id;
-//     console.log('User ID from token:', id);
-//     const user = await UserModel.findById(id);
-//     console.log('User from database:', user);
-//     if (!user) {
-//       return res.status(404).json({ msg: 'No such user' });
-//     }
-//     res.status(200).json({ user });
-//   } catch (e) {
-//     console.error('Error:', e);
-//     res.status(500).json({ msg: 'Internal server error' });
-//   }
-// };
-// export const checkauth = async (req: Request, res: Response) => {
-//   try {
-//     const cookies = cookie.parse(req.headers.cookie || '');
-//     const token = cookies.token;
-//     const secretKey = process.env.SECRETKEY;
-//     if (!secretKey) {
-//       console.error('JWT secret key is not defined');
-//       return res.status(500).json({ msg: 'JWT secret key is not defined' });
-//     }
-//     if (!token) {
-//       return res.status(401).json({ auth: false, user: 'user' });
-//     }
-//     const decoded = jwt.verify(token, secretKey) as jwt.JwtPayload;
-//     if (decoded) {
-//       const getuser = await UserModel.findById(decoded.id);
-//       // Assuming user.role is the role you want to check
-//       return res
-//         .status(200)
-//         .json({ auth: true, user: decoded.role, accHolder: getuser });
-//     }
-//   } catch (error) {
-//     console.error('Error in authentication:', error);
-//     res
-//       .status(500)
-//       .json({ msg: 'Internal server error', auth: false, user: 'user' });
-//   }
-// };
 const sendcallback = async (req, res) => {
     try {
         const sales = process.env.EMAIL_SALES || '';
@@ -557,54 +409,6 @@ const changepasswordbyuser = async (req, res) => {
     }
 };
 exports.changepasswordbyuser = changepasswordbyuser;
-// export const changepasswordbyuser = async (req: Request, res: Response) => {
-//   console.log('djeodjopkpk');
-//   const secretKey = process.env.SECRETKEY;
-//   if (!secretKey) {
-//     console.error('JWT secret key is not defined');
-//     return res.status(500).json({ msg: 'JWT secret key is not defined' });
-//   }
-//   const cookies = cookie.parse(req.headers.cookie || '');
-//   console.log('jsdodckj   ', req.headers);
-//   const token = cookies.token;
-//   console.log(token);
-//   const { newPassword, oldPassword } = req.body;
-//   try {
-//     const decoded: any = jwt.verify(token, secretKey);
-//     console.log('Decoded token:', decoded);
-//     const id = decoded.id;
-//     console.log('User ID from token:', id);
-//     const user = await UserModel.findById(id);
-//     console.log('User from database:', user);
-//     if (!user) {
-//       return res.status(404).json({ msg: 'User not found' });
-//     }
-//     const isMatch = await bcrypt.compare(oldPassword, user.password);
-//     if (!isMatch) {
-//       return res.status(401).json({ msg: 'Old password is incorrect' });
-//     }
-//     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-//     user.password = hashedNewPassword;
-//     const userEmail = user.email;
-//     // Read HTML template from file
-//     const templatePath = path.join(__dirname, '../utils/passwordchange.html');
-//     let htmlTemplate = fs.readFileSync(templatePath, 'utf8');
-//     const a = user.companyName;
-//     const htmlContent = htmlTemplate.replace('{{name}}', a);
-//     // Send confirmation email
-//     await sendEmailAdmin(
-//       userEmail,
-//       'Password Changed Successfully',
-//       'Your password has been changed successfully.',
-//       htmlContent
-//     );
-//     await user.save();
-//     res.status(200).json({ msg: 'Password changed successfully' });
-//   } catch (e) {
-//     console.error(e);
-//     res.status(500).json({ msg: 'Internal server error6' });
-//   }
-// };
 const changeforgotpass = async (req, res) => {
     console.log('djeodjopkpk');
     const secretKey = process.env.SECRETKEY;
@@ -721,35 +525,6 @@ const updateuser = async (req, res) => {
     }
 };
 exports.updateuser = updateuser;
-// export const updateuser = async (req: Request, res: Response) => {
-//   const secretKey = process.env.SECRETKEY;
-//   if (!secretKey) {
-//     console.error('JWT secret key is not defined');
-//     return res.status(500).json({ msg: 'JWT secret key is not defined' });
-//   }
-//   try {
-//     const cookies = cookie.parse(req.headers.cookie || '');
-//     console.log('jsdodckj   ', req.headers);
-//     const token = cookies.token;
-//     console.log(token);
-//     const { companyName, country, state, city, zipCode } = req.body;
-//     const decoded: any = jwt.verify(token, secretKey);
-//     const user = await UserModel.findById(decoded.id);
-//     if (!user) {
-//       return res.status(404).json({ msg: 'User not found' });
-//     }
-//     user.companyName = companyName;
-//     user.country = country;
-//     user.state = state;
-//     user.city = city;
-//     user.zipcode = zipCode;
-//     await user.save();
-//     res.status(200).json({ msg: 'User updated' });
-//   } catch (error) {
-//     console.error('Error updating user:', error);
-//     res.status(500).json({ msg: 'Internal server error' });
-//   }
-// };
 const updateuserbyadmin = async (req, res) => {
     const secretKey = process.env.SECRETKEY;
     if (!secretKey) {

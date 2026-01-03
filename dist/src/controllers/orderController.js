@@ -34,14 +34,6 @@ dotenv.config();
 //processing booking in db and payment in db
 const processBookings = async (bookings, userID, paymentMethod, paymentDetails, merchantTransactionId, discountPercentage) => {
     try {
-        //date
-        // const now = new Date();
-        // // Extract time components
-        // const hours = new Date().getHours(); // 0-23
-        // const minutes = new Date().getMinutes(); // 0-59
-        // const currentTimeinHrandMin = `${hours
-        //   .toString()
-        //   .padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
         const now = new Date();
         const timeZone = 'Asia/Kolkata';
         const zonedTime = (0, date_fns_tz_1.toZonedTime)(now, timeZone); // Adjust timezone
@@ -135,10 +127,6 @@ const processDaypasses = async (daypasses, userID, paymentMethod, paymentDetails
                 throw new Error('Location not found');
             }
             const userDetails = await user_model_1.UserModel.findById(userID);
-            // let amountPerdaypas =
-            //   daypass.price +
-            //   daypass.price * 0.18 -
-            //   daypass.price * (discountPercentage / 100);
             //booking price with discount
             let prebill = daypass.price - daypass.price * (discountPercentage / 100);
             //fixing the decimal to 2 digit
@@ -228,15 +216,14 @@ const processDaypasses = async (daypasses, userID, paymentMethod, paymentDetails
 // const failureUrl = 'https://www.603thecoworkingspace.com/payment';
 // const refundUrl = `https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/refund`;
 //prod credentials
-const MERCHANT_KEY = '1ffdba94-b557-45f4-8b17-3d7964082aa9';
-const MERCHANT_ID = 'M224FPWUGXCXH';
-const MERCHANT_BASE_URL = 'https://api.phonepe.com/apis/hermes/pg/v1/pay';
-const MERCHANT_STATUS_URL = 'https://api.phonepe.com/apis/hermes/pg/v1/status';
-const redirectUrl = 'https://603-coworking-backend.vercel.app/api/v1/order/status';
-const refundUrl = `https://api.phonepe.com/apis/hermes/pg/v1/refund`;
-const successUrl = 'https://www.603thecoworkingspace.com/dashboard';
-const failureUrl = 'https://www.603thecoworkingspace.com/payment';
-// app.post('/create-order', async (req, res) => {
+const MERCHANT_KEY = process.env.MERCHANT_KEY;
+const MERCHANT_ID = process.env.MERCHANT_ID;
+const MERCHANT_BASE_URL = process.env.MERCHANT_BASE_URL;
+const MERCHANT_STATUS_URL = process.env.MERCHANT_STATUS_URL;
+const redirectUrl = process.env.REDIRECTURL;
+const refundUrl = process.env.REFUNDURL;
+const successUrl = process.env.SUCCESSFULURL;
+const failureUrl = process.env.FAILUREURL;
 const create = async (req, res) => {
     const { accHolder, amount, bookings, dayPasses, discountPercentage } = req.body;
     console.log(req.body);
@@ -256,8 +243,6 @@ const create = async (req, res) => {
         },
     };
     const payload = Buffer.from(JSON.stringify(paymentPayload)).toString('base64');
-    // SHA256(base64 encoded payload + “/pg/v1/pay” +
-    //   salt key) + ### + salt index
     const keyIndex = 1;
     const string = payload + '/pg/v1/pay' + MERCHANT_KEY;
     const sha256 = crypto.createHash('sha256').update(string).digest('hex');
@@ -288,7 +273,6 @@ const create = async (req, res) => {
     }
 };
 exports.create = create;
-// app.post('/status', async (req, res) => {
 const validate = async (req, res) => {
     console.log('enter into the validate ');
     const merchantTransactionId = req.query.id;
@@ -315,42 +299,14 @@ const validate = async (req, res) => {
             'X-MERCHANT-ID': MERCHANT_ID,
         },
     };
-    //response.data
-    // {
-    //   success: true,
-    //   code: 'PAYMENT_SUCCESS',
-    //   message: 'Your payment is successful.',
-    //   data: {
-    //     merchantId: 'PGTESTPAYUAT86',
-    //     merchantTransactionId: 'z1ha38nlsq2ur0u',
-    //     transactionId: 'T2412131529091020295178',
-    //     amount: 10000,
-    //     state: 'COMPLETED',
-    //     responseCode: 'SUCCESS',
-    //     paymentInstrument: {
-    //       type: 'CARD',
-    //       cardType: 'CREDIT_CARD',
-    //       pgTransactionId: 'PG2207221432267522530776',
-    //       bankTransactionId: null,
-    //       pgAuthorizationCode: null,
-    //       arn: '12121214455',
-    //       bankId: null,
-    //       brn: 'B12345'
-    //     }
-    //   }
-    // }
     axios_1.default.request(option).then(response => {
         console.log(response.data);
         if (response.data.code === 'PAYMENT_SUCCESS') {
-            // return res.redirect(successUrl);
             const paymentMethod = response.data.data.paymentInstrument.type;
             const payment = response.data.data;
             if (bookingsRaw !== 'undefined') {
                 const bookings = JSON.parse(decodeURIComponent(bookingsRaw));
                 console.log(bookings);
-                // // return res.redirect(successUrl);
-                // const paymentMethod = response.data.data.paymentInstrument.type;
-                // const payment = response.data.data;
                 if (bookings.length !== 0) {
                     processBookings(bookings, userID, paymentMethod, payment, merchantTransactionId, discountPercentage);
                 }
@@ -374,46 +330,12 @@ const phonepeCallback = async (req, res) => {
     console.log('welcome to the callback url');
 };
 exports.phonepeCallback = phonepeCallback;
-// {
-//   success: true,
-//   code: 'PAYMENT_SUCCESS',
-//   message: 'Your payment is successful.',
-//   data: {
-//     merchantId: 'PGTESTPAYUAT86',
-//     merchantTransactionId: 'z1ha38nlsq2ur0u',
-//     transactionId: 'T2412141010019210295412',
-//     amount: 10000,
-//     state: 'COMPLETED',
-//     responseCode: 'SUCCESS',
-//     paymentInstrument: {
-//       type: 'CARD',
-//       cardType: 'CREDIT_CARD',
-//       pgTransactionId: 'PG2207221432267522530776',
-//       bankTransactionId: null,
-//       pgAuthorizationCode: null,
-//       arn: '12121214455',
-//       bankId: null,
-//       brn: 'B12345'
-//     }
-//   }
-// }
-// accept: 'text/plain',
 const refund = async (req, res) => {
-    console.log('refund initialization');
     const { accHolder, bookingid, selectedTransaction } = req.body;
     console.log(req.body);
-    //  || 'z1ha38nlsq2ur0u'
     const orderId = selectedTransaction.transactionId;
-    //refund amount in paisa
     const refundAmount = selectedTransaction.transactionAmount * 100;
-    console.log(refundAmount);
     const refundTransactionID = uniqid();
-    // const {} = req.body;
-    // callbackUrl: 'https://webhook.site/callback-url',
-    // callbackUrl: 'http://127.0.0.1:3000/refundcallback',
-    // merchantTransactionId: 'ROD620471739210623',
-    // merchantUserId: accHolder.name,
-    // callbackUrl: 'http://127.0.0.1:3000/api/v1/order/refundcallback',
     const paymentPayload = {
         merchantId: MERCHANT_ID,
         merchantUserId: accHolder._id,
@@ -423,7 +345,6 @@ const refund = async (req, res) => {
         callbackUrl: 'https://603-coworking-backend.vercel.app/api/v1/order/refundcallback',
     };
     const payload = Buffer.from(JSON.stringify(paymentPayload)).toString('base64');
-    // SHA256(base64 encoded payload + “/pg/v1/refund” + salt key) + ### + salt index
     const keyIndex = 1;
     const string = payload + '/pg/v1/refund' + MERCHANT_KEY;
     const sha256 = crypto.createHash('sha256').update(string).digest('hex');
@@ -441,21 +362,8 @@ const refund = async (req, res) => {
             request: payload,
         },
     };
-    // axios
-    //   .request(options)
-    //   .then(function (response: any) {
-    //     console.log(response.data);
-    //   })
-    //   .catch(function (error: any) {
-    //     console.error(error.message);
-    //   });
     try {
         const response = await axios.request(options);
-        // console.log('refund init', response.data);
-        // res.status(200).json({
-        //   msg: 'OK',
-        //   data: response.data,
-        // });
         const merchantTransactionId = response.data.data.merchantTransactionId;
         if ((response.data.code = 'PAYMENT_PENDING')) {
             const keyIndex = 1;
@@ -548,109 +456,14 @@ const refund = async (req, res) => {
     }
 };
 exports.refund = refund;
-// {
-//   success: true,
-//   code: 'PAYMENT_SUCCESS',
-//   message: 'Your payment is successful.',
-//   data: {
-//     merchantId: 'PGTESTPAYUAT86',
-//     merchantTransactionId: 'ROD620471739210623',
-//     transactionId: 'TR2412141115357080295779',
-//     amount: 10000,
-//     state: 'COMPLETED',
-//     responseCode: 'SUCCESS',
-//     paymentInstrument: {
-//       type: 'CARD',
-//       cardType: 'CREDIT_CARD',
-//       pgTransactionId: 'PG2207221432267522530123',
-//       bankTransactionId: null,
-//       pgAuthorizationCode: null,
-//       arn: '74332743330332971112226767',
-//       bankId: 'HDFC',
-//       brn: 'B12345'
-//     }
-//   }
-// }
 const refundcallback = async (req, res) => {
     console.log('refund callback request');
 };
 exports.refundcallback = refundcallback;
-// //razorpay
-// const razorpay = new Razorpay({
-//   key_id: process.env.RAZORPAY_KEYID,
-//   key_secret: process.env.RAZORPAY_SECRETKEY,
-// });
-// // Route to handle order creation
-// export const createOrder = async (req: Request, res: Response) => {
-//   try {
-//     const { options } = req.body;
-//     console.log(req.body);
-//     const order = await razorpay.orders.create(options);
-//     console.log(order);
-//     if (!order) {
-//       return res.status(500).json({ message: "error" });
-//     }
-//     res.status(200).json(order);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({
-//       message: "error",
-//       error,
-//     });
-//   }
-// };
-// // Route to handle payment validation and fetch payment method
-// export const validateOrder = async (req: Request, res: Response) => {
-//   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
-//     req.body;
-//   // Verify the payment signature
-//   const sha = crypto.createHmac("sha256", process.env.RAZORPAY_SECRETKEY);
-//   sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
-//   const digest = sha.digest("hex");
-//   if (digest !== razorpay_signature) {
-//     return res.status(400).json({ msg: "Transaction is not legit" });
-//   }
-//   try {
-//     // Fetch payment details from Razorpay
-//     const payment = await razorpay.payments.fetch(razorpay_payment_id);
-//     if (!payment) {
-//       return res
-//         .status(500)
-//         .json({ msg: "Error fetching payment details", payment });
-//     }
-//     // Extract the payment method used
-//     const paymentMethod = payment.method; // e.g., "card", "upi", "netbanking", etc.
-//     //payment status
-//     const paymentStatus = payment.status; //eg,'authorized','captured','failed'
-//     if (paymentStatus === "failed") {
-//       // Payment failed
-//       return res.status(400).json({
-//         msg: "Payment failed",
-//         status: paymentStatus, // Failed status
-//         error: payment.error_code ? payment.error_code : "Unknown error",
-//         description: payment.error_description
-//           ? payment.error_description
-//           : "No description available",
-//       });
-//     }
-//     // Send response back with payment details
-//     res.status(200).json({
-//       msg: "Success",
-//       orderId: razorpay_order_id,
-//       paymentId: razorpay_payment_id,
-//       paymentMethod, // Send the payment method in the response
-//       paymentDetails: payment, // Optional: Send complete payment details if needed
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ msg: "error ", error });
-//   }
-// };
 //function to store multiple  booking and payment and send email to the user
 const createBookingPaymentDatabase = async (req, res) => {
     const { bookings, userDetails, paymentMethod, paymentDetails, paymentId } = req.body;
     console.log(req.body);
-    //kayb hqev clbb euvv   for application
     //get the lenght of the array
     const TotalBookings = bookings.length + 1;
     // Assuming you want to map through the bookings and process each one

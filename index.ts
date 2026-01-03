@@ -98,12 +98,12 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // Catch-all route for undefined routes
-app.use((req: Request, res: Response) => {
+app.use('*', (req: Request, res: Response) => {
   console.log('Undefined route accessed:', req.originalUrl);
   res.status(404).send('Route not found');
 });
 
-const ZOHO_TOKEN_URL = 'https://accounts.zoho.com/oauth/v2/token';
+const ZOHO_TOKEN_URL = process.env.ZOHO_TOKEN_URL;
 
 let {
   ZOHO_CLIENT_ID,
