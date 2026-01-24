@@ -67,7 +67,8 @@ const scheduleCreditsJob = () => {
         // schedule.scheduleJob('*/2 * * * *', async () => {
         console.log('Running the credits upate  job at', new Date().toISOString());
         try {
-            const admin = process.env.EMAIL_ADMIN || '';
+            const admin = process.env.EMAIL_USER || '';
+            // const admin = process.env.EMAIL_ADMIN || '';
             const result = await user_model_1.UserModel.updateMany({}, [
                 { $set: { creditsleft: { $toDouble: '$monthlycredits' } } },
             ]);

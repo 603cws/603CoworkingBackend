@@ -1,17 +1,12 @@
 import { Request, Response } from 'express';
-// const Razorpay = require("razorpay");
 const dotenv = require('dotenv');
 const crypto = require('crypto');
 const uniqid = require('uniqid');
 import { createBookingOnZohoOnlinePay } from './zohoController';
 import axios from 'axios';
 import { format, toZonedTime } from 'date-fns-tz';
-// const {
-//   validateWebhookSignature,
-// } = require("razorpay/dist/utils/razorpay-utils");
 
 import { BookingModel } from '../models/booking.model';
-// import { createBooking } from "../controllers/bookingControllers";
 import { SpaceModel } from '../models/space.model';
 import { sendEmailAdmin } from '../utils/emailUtils';
 import fs from 'fs';
@@ -20,16 +15,7 @@ import { DayPass } from '../models/Daypassbookingmodel';
 import { PaymentModel } from '../models/payment.model';
 import { UserModel } from '../models/user.model';
 import { CancelledBookingModel } from '../models/cancelledBooking.model';
-// import { checkTimeOverlap } from "../controllers/bookingControllers";
-
-//configure
 dotenv.config();
-
-// let amountPerBooking =
-//   booking.price +
-//   booking.price * 0.18 -
-//   booking.price * (discountPercentage / 100);
-
 //processing booking in db and payment in db
 const processBookings = async (
   bookings: any,

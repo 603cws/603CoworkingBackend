@@ -3,7 +3,6 @@ import { DayPass } from '../models/Daypassbookingmodel';
 import { Types } from 'mongoose';
 import { SpaceModel } from '../models/space.model';
 import { UserModel } from '../models/user.model';
-import { log } from 'console';
 
 const schedule = require('node-schedule');
 
@@ -22,9 +21,6 @@ interface DayPassBookingRequest extends Request {
     paymentMethod: 'pending' | 'credit_card' | 'paypal';
   };
 }
-
-// user:Types.ObjectId
-// date:string;
 
 export const DayPassBooking = async (
   req: DayPassBookingRequest,
@@ -189,16 +185,6 @@ export const checkDaypassAvaiableForLocation = async (
   req: Request,
   res: Response
 ) => {
-  // bookDayPass({
-  //   price: likelyprice * quantity,
-  //   spaceName: selectedLocation,
-  //   bookeddate: selectedDate,
-  //   day: selectedDay || 0,
-  //   month: currentMonth + 1,
-  //   year: currentYear,
-  //   quantity: quantity,
-  // });
-
   const { spaceName, quantity } = req.body;
 
   //get the space
@@ -232,16 +218,6 @@ export const checkincordecofdaypassavaialble = async (
   req: Request,
   res: Response
 ) => {
-  // bookDayPass({
-  //   price: likelyprice * quantity,
-  //   spaceName: selectedLocation,
-  //   bookeddate: selectedDate,
-  //   day: selectedDay || 0,
-  //   month: currentMonth + 1,
-  //   year: currentYear,
-  //   quantity: quantity,
-  // });
-
   const { spaceName, quantity } = req.body;
 
   const updatedSpace = await SpaceModel.findOneAndUpdate(
@@ -254,29 +230,6 @@ export const checkincordecofdaypassavaialble = async (
     updatedSpace,
   });
 };
-
-// {
-//     "_id": {
-//       "$oid": "673c4031b5c2547d36da6687"
-//     },
-//     "space": {
-//       "$oid": "6724804d5c694d98e3e0048e"
-//     },
-//     "companyName": "603cws",
-//     "email": "manchadiyuvraj@gmail.com",
-//     "spaceName": "Bandra Day Pass",
-//     "phone": "9594767165",
-//     "bookeddate": "18/11/2024",
-//     "day": 18,
-//     "month": 11,
-//     "year": 2024,
-//     "status": "captured",
-//     "paymentMethod": "upi",
-//     "createdAt": {
-//       "$date": "2024-11-19T07:37:21.615Z"
-//     },
-//     "__v": 0
-//   }
 
 //getdaypasses by user
 export const getDaypassesOfUser = async (req: Request, res: Response) => {

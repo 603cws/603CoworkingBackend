@@ -4,18 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createdaypassesPaymentDatabase = exports.createBookingPaymentDatabase = exports.refundcallback = exports.refund = exports.phonepeCallback = exports.validate = exports.create = void 0;
-// const Razorpay = require("razorpay");
 const dotenv = require('dotenv');
 const crypto = require('crypto');
 const uniqid = require('uniqid');
 const zohoController_1 = require("./zohoController");
 const axios_1 = __importDefault(require("axios"));
 const date_fns_tz_1 = require("date-fns-tz");
-// const {
-//   validateWebhookSignature,
-// } = require("razorpay/dist/utils/razorpay-utils");
 const booking_model_1 = require("../models/booking.model");
-// import { createBooking } from "../controllers/bookingControllers";
 const space_model_1 = require("../models/space.model");
 const emailUtils_1 = require("../utils/emailUtils");
 const fs_1 = __importDefault(require("fs"));
@@ -24,13 +19,7 @@ const Daypassbookingmodel_1 = require("../models/Daypassbookingmodel");
 const payment_model_1 = require("../models/payment.model");
 const user_model_1 = require("../models/user.model");
 const cancelledBooking_model_1 = require("../models/cancelledBooking.model");
-// import { checkTimeOverlap } from "../controllers/bookingControllers";
-//configure
 dotenv.config();
-// let amountPerBooking =
-//   booking.price +
-//   booking.price * 0.18 -
-//   booking.price * (discountPercentage / 100);
 //processing booking in db and payment in db
 const processBookings = async (bookings, userID, paymentMethod, paymentDetails, merchantTransactionId, discountPercentage) => {
     try {

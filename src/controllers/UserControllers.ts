@@ -199,7 +199,8 @@ export const checkauth = async (req: Request, res: Response) => {
 
 export const sendcallback = async (req: Request, res: Response) => {
   try {
-    const sales = process.env.EMAIL_SALES || '';
+    const sales = process.env.EMAIL_USER || '';
+    // const sales = process.env.EMAIL_SALES || '';
     const { email, name, phone, company, requirements } = req.body;
 
     const templatePath = path.join(__dirname, '../utils/callbackuser.html');
@@ -215,32 +216,32 @@ export const sendcallback = async (req: Request, res: Response) => {
 
     await createLeadPopupForm(data);
 
-    // const a = name;
-    // const htmlContent = htmlTemplate.replace('{{name}}', a);
+    const a = name;
+    const htmlContent = htmlTemplate.replace('{{name}}', a);
 
-    // await sendEmailSales(
-    //   email,
-    //   'Your CallBack request has been sent',
-    //   'Your request has been successfully confirmed.',
-    //   htmlContent
-    // );
+    await sendEmailSales(
+      email,
+      'Your CallBack request has been sent',
+      'Your request has been successfully confirmed.',
+      htmlContent,
+    );
 
-    // const templatePath2 = path.join(__dirname, '../utils/callbackadmin.html');
-    // let htmlTemplate2 = fs.readFileSync(templatePath2, 'utf8');
+    const templatePath2 = path.join(__dirname, '../utils/callbackadmin.html');
+    let htmlTemplate2 = fs.readFileSync(templatePath2, 'utf8');
 
-    // const htmlContent2 = htmlTemplate2
-    //   .replace('{{name}}', a)
-    //   .replace('{{phone}}', phone)
-    //   .replace('{{email}}', email)
-    //   .replace('{{company}}', company)
-    //   .replace('{{requirements}}', requirements);
+    const htmlContent2 = htmlTemplate2
+      .replace('{{name}}', a)
+      .replace('{{phone}}', phone)
+      .replace('{{email}}', email)
+      .replace('{{company}}', company)
+      .replace('{{requirements}}', requirements);
 
-    // await sendEmailSales(
-    //   sales,
-    //   'CallBack request recieved',
-    //   'A callback request has been recieved.',
-    //   htmlContent2
-    // );
+    await sendEmailSales(
+      sales,
+      'CallBack request recieved',
+      'A callback request has been recieved.',
+      htmlContent2,
+    );
 
     res
       .status(200)
@@ -254,7 +255,8 @@ export const sendcallback = async (req: Request, res: Response) => {
 export const requestTour = async (req: Request, res: Response) => {
   try {
     //sales email
-    const sales = process.env.EMAIL_SALES || '';
+    const sales = process.env.EMAIL_USER || '';
+    // const sales = process.env.EMAIL_SALES || '';
 
     //requested body
     const { name, email, phone, location, intrestedIn } = req.body;
@@ -269,13 +271,13 @@ export const requestTour = async (req: Request, res: Response) => {
       email,
       'Your Tour request has been sent',
       'Your request has been successfully confirmed.',
-      htmlContent
+      htmlContent,
     );
 
     //email template for admin
     const templatePath2 = path.join(
       __dirname,
-      '../utils/requesttouradmin.html'
+      '../utils/requesttouradmin.html',
     );
 
     //reading the template
@@ -293,7 +295,7 @@ export const requestTour = async (req: Request, res: Response) => {
       sales,
       'Tour request recieved',
       'A Tour request has been recieved.',
-      htmlContent2
+      htmlContent2,
     );
     //send the data to the zoho lead
     const zohoLead = await requestTourLead(req.body);
@@ -309,7 +311,8 @@ export const requestTour = async (req: Request, res: Response) => {
 
 export const contactus = async (req: Request, res: Response) => {
   try {
-    const sales = process.env.EMAIL_SALES || '';
+    const sales = process.env.EMAIL_USER || '';
+    // const sales = process.env.EMAIL_SALES || '';
     const {
       name,
       phone,
@@ -343,7 +346,7 @@ export const contactus = async (req: Request, res: Response) => {
       email,
       'Your CallBack request has been sent',
       'Your request has been successfully confirmed.',
-      htmlContent
+      htmlContent,
     );
 
     const templatePath2 = path.join(__dirname, '../utils/callbackadmin.html');
@@ -363,7 +366,7 @@ export const contactus = async (req: Request, res: Response) => {
       sales,
       'Customer is trying to contact',
       'A customer has raised a contact request.',
-      htmlContent2
+      htmlContent2,
     );
 
     res
@@ -378,12 +381,13 @@ export const contactus = async (req: Request, res: Response) => {
 export const contactusInterior = async (req: Request, res: Response) => {
   try {
     // console.log(req.body);
-    const sales = process.env.EMAIL_SALES || '';
+    const sales = process.env.EMAIL_USER || '';
+    // const sales = process.env.EMAIL_SALES || '';
     const { name, phone, email, company, message } = req.body;
 
     const templatePath = path.join(
       __dirname,
-      '../utils/callbackuserinterior.html'
+      '../utils/callbackuserinterior.html',
     );
     let htmlTemplate = fs.readFileSync(templatePath, 'utf8');
     const a = name;
@@ -393,12 +397,12 @@ export const contactusInterior = async (req: Request, res: Response) => {
       email,
       'Your CallBack request has been sent',
       'Your request has been successfully confirmed.',
-      htmlContent
+      htmlContent,
     );
 
     const templatePath2 = path.join(
       __dirname,
-      '../utils/callbackadmininterior.html'
+      '../utils/callbackadmininterior.html',
     );
     let htmlTemplate2 = fs.readFileSync(templatePath2, 'utf8');
 
@@ -413,7 +417,7 @@ export const contactusInterior = async (req: Request, res: Response) => {
       sales,
       'Customer is trying to contact',
       'A customer has raised a contact request.',
-      htmlContent2
+      htmlContent2,
     );
     res
       .status(200)
@@ -521,7 +525,7 @@ export const changepasswordbyuser = async (req: Request, res: Response) => {
       userEmail,
       'Password Changed Successfully',
       'Your password has been changed successfully.',
-      htmlContent
+      htmlContent,
     );
 
     await user.save();
@@ -569,7 +573,7 @@ export const changeforgotpass = async (req: Request, res: Response) => {
       userEmail,
       'Password Changed Successfully',
       'Your password has been changed successfully.',
-      htmlContent
+      htmlContent,
     );
     await user.save();
     res.status(200).json({ msg: 'Password changed successfully' });
@@ -603,7 +607,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { email: email }, // Minimized payload
       secretKey, // Keep the key secure, consider its length if appropriate
-      { algorithm: 'HS384', expiresIn: '5m' } // Token expires in 3 minutes
+      { algorithm: 'HS384', expiresIn: '5m' }, // Token expires in 3 minutes
     );
 
     const link = `https://www.603thecoworkingspace.com/changepassword/${token}`;
@@ -622,7 +626,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
       email,
       'Password Reset Request',
       'Please use the link below to reset your password.',
-      htmlContent
+      htmlContent,
     );
 
     return res

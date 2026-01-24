@@ -5,8 +5,6 @@ const Daypassbookingmodel_1 = require("../models/Daypassbookingmodel");
 const space_model_1 = require("../models/space.model");
 const user_model_1 = require("../models/user.model");
 const schedule = require('node-schedule');
-// user:Types.ObjectId
-// date:string;
 const DayPassBooking = async (req, res) => {
     try {
         const { space, companyName, spaceName, bookeddate, month, year, status, day, paymentMethod, phone, email, } = req.body;
@@ -126,15 +124,6 @@ const getdaypassbookings = async (req, res) => {
 exports.getdaypassbookings = getdaypassbookings;
 //check if daypass is available or not
 const checkDaypassAvaiableForLocation = async (req, res) => {
-    // bookDayPass({
-    //   price: likelyprice * quantity,
-    //   spaceName: selectedLocation,
-    //   bookeddate: selectedDate,
-    //   day: selectedDay || 0,
-    //   month: currentMonth + 1,
-    //   year: currentYear,
-    //   quantity: quantity,
-    // });
     const { spaceName, quantity } = req.body;
     //get the space
     const spacedetailsDaypass = await space_model_1.SpaceModel.findOne({ name: spaceName });
@@ -159,15 +148,6 @@ const checkDaypassAvaiableForLocation = async (req, res) => {
 };
 exports.checkDaypassAvaiableForLocation = checkDaypassAvaiableForLocation;
 const checkincordecofdaypassavaialble = async (req, res) => {
-    // bookDayPass({
-    //   price: likelyprice * quantity,
-    //   spaceName: selectedLocation,
-    //   bookeddate: selectedDate,
-    //   day: selectedDay || 0,
-    //   month: currentMonth + 1,
-    //   year: currentYear,
-    //   quantity: quantity,
-    // });
     const { spaceName, quantity } = req.body;
     const updatedSpace = await space_model_1.SpaceModel.findOneAndUpdate({ name: spaceName }, // Filter
     { $inc: { availableCapacity: -quantity } }, { new: true, runValidators: true } // Return the updated document
@@ -177,28 +157,6 @@ const checkincordecofdaypassavaialble = async (req, res) => {
     });
 };
 exports.checkincordecofdaypassavaialble = checkincordecofdaypassavaialble;
-// {
-//     "_id": {
-//       "$oid": "673c4031b5c2547d36da6687"
-//     },
-//     "space": {
-//       "$oid": "6724804d5c694d98e3e0048e"
-//     },
-//     "companyName": "603cws",
-//     "email": "manchadiyuvraj@gmail.com",
-//     "spaceName": "Bandra Day Pass",
-//     "phone": "9594767165",
-//     "bookeddate": "18/11/2024",
-//     "day": 18,
-//     "month": 11,
-//     "year": 2024,
-//     "status": "captured",
-//     "paymentMethod": "upi",
-//     "createdAt": {
-//       "$date": "2024-11-19T07:37:21.615Z"
-//     },
-//     "__v": 0
-//   }
 //getdaypasses by user
 const getDaypassesOfUser = async (req, res) => {
     try {

@@ -5,7 +5,7 @@ export const sendEmail = async (
   to: string,
   subject: string,
   text: string,
-  html: string
+  html: string,
 ) => {
   console.log('Sending email to:', to);
   console.log('Email subject:', subject);
@@ -42,7 +42,7 @@ export const sendCareerEmailCompany = async (
   to: string,
   subject: string,
   text: string,
-  html: string
+  html: string,
 ) => {
   console.log('Sending email to:', to);
   console.log('Email subject:', subject);
@@ -53,18 +53,29 @@ export const sendCareerEmailCompany = async (
     port: 465,
     secure: true,
     auth: {
-      user: process.env.EMAIL_ADMIN,
-      pass: process.env.ADMIN_SALES,
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
+    // auth: {
+    //   user: process.env.EMAIL_ADMIN,
+    //   pass: process.env.ADMIN_SALES,
+    // },
   });
 
   let mailOptions = {
-    from: process.env.EMAIL_ADMIN,
+    from: process.env.EMAIL_USER,
     to,
     subject,
     text,
     html,
   };
+  // let mailOptions = {
+  //   from: process.env.EMAIL_ADMIN,
+  //   to,
+  //   subject,
+  //   text,
+  //   html,
+  // };
 
   try {
     let info = await transporter.sendMail(mailOptions);
@@ -79,7 +90,7 @@ export const sendCareerEmailCandidate = async (
   to: string,
   subject: string,
   text: string,
-  html: string
+  html: string,
 ) => {
   console.log('Sending email to:', to);
   console.log('Email subject:', subject);
@@ -90,18 +101,25 @@ export const sendCareerEmailCandidate = async (
     port: 465,
     secure: true,
     auth: {
-      user: process.env.EMAIL_ADMIN,
-      pass: process.env.ADMIN_SALES,
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
   let mailOptions = {
-    from: process.env.EMAIL_ADMIN,
+    from: process.env.EMAIL_USER,
     to,
     subject,
     text,
     html,
   };
+  // let mailOptions = {
+  //   from: process.env.EMAIL_ADMIN,
+  //   to,
+  //   subject,
+  //   text,
+  //   html,
+  // };
 
   try {
     let info = await transporter.sendMail(mailOptions);
@@ -117,7 +135,7 @@ export const sendEmailSales = async (
   to: string,
   subject: string,
   text: string,
-  html: string
+  html: string,
 ) => {
   console.log('Sending sales email to:', to);
   console.log('Email subject:', subject);
@@ -160,7 +178,7 @@ export const sendEmailAdmin = async (
   to: string,
   subject: string,
   text: string,
-  html: string
+  html: string,
 ) => {
   console.log('Sending admin email to:', to);
   console.log('Email subject:', subject);
@@ -204,7 +222,7 @@ export const sendEmailPartner = async (
   to: string,
   subject: string,
   text: string,
-  html: string
+  html: string,
 ) => {
   console.log('Sending Partnership email to:', to);
   console.log('Email subject:', subject);
@@ -215,18 +233,30 @@ export const sendEmailPartner = async (
     port: 465,
     secure: true,
     auth: {
-      user: process.env.EMAIL_SALES,
-      pass: process.env.PASS_SALES,
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
+    // auth: {
+    //   user: process.env.EMAIL_SALES,
+    //   pass: process.env.PASS_SALES,
+    // },
   });
 
   let mailOptions = {
-    from: process.env.EMAIL_SALES,
+    from: process.env.EMAIL_USER,
     to,
     subject,
     text,
     html,
   };
+
+  // let mailOptions = {
+  //   from: process.env.EMAIL_SALES,
+  //   to,
+  //   subject,
+  //   text,
+  //   html,
+  // };
 
   try {
     let info = await transporter.sendMail(mailOptions);
@@ -241,7 +271,7 @@ export const sendEventEmail = async (
   to: string,
   subject: string,
   text: string,
-  html: string
+  html: string,
 ) => {
   console.log('Sending email to:', to);
   console.log('Email subject:', subject);
@@ -252,18 +282,29 @@ export const sendEventEmail = async (
     port: 465,
     secure: true,
     auth: {
-      user: process.env.EMAIL_ADMIN,
-      pass: process.env.ADMIN_SALES,
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
+    // auth: {
+    //   user: process.env.EMAIL_ADMIN,
+    //   pass: process.env.ADMIN_SALES,
+    // },
   });
 
   let mailOptions = {
-    from: process.env.EMAIL_ADMIN,
+    from: process.env.EMAIL_USER,
     to,
     subject,
     text,
     html,
   };
+  // let mailOptions = {
+  //   from: process.env.EMAIL_ADMIN,
+  //   to,
+  //   subject,
+  //   text,
+  //   html,
+  // };
 
   try {
     let info = await transporter.sendMail(mailOptions);

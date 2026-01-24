@@ -162,7 +162,8 @@ const checkauth = async (req, res) => {
 exports.checkauth = checkauth;
 const sendcallback = async (req, res) => {
     try {
-        const sales = process.env.EMAIL_SALES || '';
+        const sales = process.env.EMAIL_USER || '';
+        // const sales = process.env.EMAIL_SALES || '';
         const { email, name, phone, company, requirements } = req.body;
         const templatePath = path_1.default.join(__dirname, '../utils/callbackuser.html');
         let htmlTemplate = fs_1.default.readFileSync(templatePath, 'utf8');
@@ -174,28 +175,18 @@ const sendcallback = async (req, res) => {
             requirements,
         };
         await (0, zohoController_1.createLeadPopupForm)(data);
-        // const a = name;
-        // const htmlContent = htmlTemplate.replace('{{name}}', a);
-        // await sendEmailSales(
-        //   email,
-        //   'Your CallBack request has been sent',
-        //   'Your request has been successfully confirmed.',
-        //   htmlContent
-        // );
-        // const templatePath2 = path.join(__dirname, '../utils/callbackadmin.html');
-        // let htmlTemplate2 = fs.readFileSync(templatePath2, 'utf8');
-        // const htmlContent2 = htmlTemplate2
-        //   .replace('{{name}}', a)
-        //   .replace('{{phone}}', phone)
-        //   .replace('{{email}}', email)
-        //   .replace('{{company}}', company)
-        //   .replace('{{requirements}}', requirements);
-        // await sendEmailSales(
-        //   sales,
-        //   'CallBack request recieved',
-        //   'A callback request has been recieved.',
-        //   htmlContent2
-        // );
+        const a = name;
+        const htmlContent = htmlTemplate.replace('{{name}}', a);
+        await (0, emailUtils_1.sendEmailSales)(email, 'Your CallBack request has been sent', 'Your request has been successfully confirmed.', htmlContent);
+        const templatePath2 = path_1.default.join(__dirname, '../utils/callbackadmin.html');
+        let htmlTemplate2 = fs_1.default.readFileSync(templatePath2, 'utf8');
+        const htmlContent2 = htmlTemplate2
+            .replace('{{name}}', a)
+            .replace('{{phone}}', phone)
+            .replace('{{email}}', email)
+            .replace('{{company}}', company)
+            .replace('{{requirements}}', requirements);
+        await (0, emailUtils_1.sendEmailSales)(sales, 'CallBack request recieved', 'A callback request has been recieved.', htmlContent2);
         res
             .status(200)
             .json({ msg: 'Request sent to both user and admin successfully!' });
@@ -209,7 +200,8 @@ exports.sendcallback = sendcallback;
 const requestTour = async (req, res) => {
     try {
         //sales email
-        const sales = process.env.EMAIL_SALES || '';
+        const sales = process.env.EMAIL_USER || '';
+        // const sales = process.env.EMAIL_SALES || '';
         //requested body
         const { name, email, phone, location, intrestedIn } = req.body;
         //email template for user
@@ -245,7 +237,8 @@ const requestTour = async (req, res) => {
 exports.requestTour = requestTour;
 const contactus = async (req, res) => {
     try {
-        const sales = process.env.EMAIL_SALES || '';
+        const sales = process.env.EMAIL_USER || '';
+        // const sales = process.env.EMAIL_SALES || '';
         const { name, phone, email, location, seats, company, specifications, requirements, } = req.body;
         let data = {
             name,
@@ -287,7 +280,8 @@ exports.contactus = contactus;
 const contactusInterior = async (req, res) => {
     try {
         // console.log(req.body);
-        const sales = process.env.EMAIL_SALES || '';
+        const sales = process.env.EMAIL_USER || '';
+        // const sales = process.env.EMAIL_SALES || '';
         const { name, phone, email, company, message } = req.body;
         const templatePath = path_1.default.join(__dirname, '../utils/callbackuserinterior.html');
         let htmlTemplate = fs_1.default.readFileSync(templatePath, 'utf8');
@@ -468,8 +462,7 @@ const forgotPassword = async (req, res) => {
         }
         const token = jsonwebtoken_1.default.sign({ email: email }, // Minimized payload
         secretKey, // Keep the key secure, consider its length if appropriate
-        { algorithm: 'HS384', expiresIn: '5m' } // Token expires in 3 minutes
-        );
+        { algorithm: 'HS384', expiresIn: '5m' });
         const link = `https://www.603thecoworkingspace.com/changepassword/${token}`;
         const templatePath = path_1.default.join(__dirname, '../utils/forgotpass.html');
         // Read HTML template

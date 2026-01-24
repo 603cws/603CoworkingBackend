@@ -42,7 +42,7 @@ export async function cronHandler(req: Request, res: Response) {
     ]);
 
     console.log(
-      `Matched ${result.matchedCount} documents and modified ${result.modifiedCount} documents`
+      `Matched ${result.matchedCount} documents and modified ${result.modifiedCount} documents`,
     );
 
     // await logCronExecution(`Updated ${result.modifiedCount} users`);
@@ -78,13 +78,14 @@ export const scheduleCreditsJob = () => {
     // schedule.scheduleJob('*/2 * * * *', async () => {
     console.log('Running the credits upate  job at', new Date().toISOString());
     try {
-      const admin = process.env.EMAIL_ADMIN || '';
+      const admin = process.env.EMAIL_USER || '';
+      // const admin = process.env.EMAIL_ADMIN || '';
       const result = await UserModel.updateMany({}, [
         { $set: { creditsleft: { $toDouble: '$monthlycredits' } } },
       ]);
 
       console.log(
-        `Matched ${result.matchedCount} documents and modified ${result.modifiedCount} documents`
+        `Matched ${result.matchedCount} documents and modified ${result.modifiedCount} documents`,
       );
 
       let users = `${result.matchedCount}`;
@@ -101,7 +102,7 @@ export const scheduleCreditsJob = () => {
 
       const templatePath = path.join(
         __dirname,
-        '../src/utils/CreditsUpdatedAdmin.html'
+        '../src/utils/CreditsUpdatedAdmin.html',
       );
       console.log(templatePath);
 
@@ -121,7 +122,7 @@ export const scheduleCreditsJob = () => {
         admin,
         'Credits updated',
         'Credits renewed',
-        htmlContent
+        htmlContent,
       );
     } catch (error) {
       console.log('something went wrong');
