@@ -198,8 +198,6 @@ export const sendEmailAdmin = async (
     // },
   });
 
-  console.log('helloo this is yuvraj');
-
   let mailOptions = {
     from: process.env.EMAIL_USER,
     // from: process.env.EMAIL_ADMIN,

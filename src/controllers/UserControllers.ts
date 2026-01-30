@@ -199,8 +199,8 @@ export const checkauth = async (req: Request, res: Response) => {
 
 export const sendcallback = async (req: Request, res: Response) => {
   try {
-    const sales = process.env.EMAIL_USER || '';
-    // const sales = process.env.EMAIL_SALES || '';
+    // const sales = process.env.EMAIL_USER || '';
+    const sales = process.env.EMAIL_SALES || '';
     const { email, name, phone, company, requirements } = req.body;
 
     const templatePath = path.join(__dirname, '../utils/callbackuser.html');
@@ -255,8 +255,8 @@ export const sendcallback = async (req: Request, res: Response) => {
 export const requestTour = async (req: Request, res: Response) => {
   try {
     //sales email
-    const sales = process.env.EMAIL_USER || '';
-    // const sales = process.env.EMAIL_SALES || '';
+    // const sales = process.env.EMAIL_USER || '';
+    const sales = process.env.EMAIL_SALES || '';
 
     //requested body
     const { name, email, phone, location, intrestedIn } = req.body;
@@ -311,8 +311,8 @@ export const requestTour = async (req: Request, res: Response) => {
 
 export const contactus = async (req: Request, res: Response) => {
   try {
-    const sales = process.env.EMAIL_USER || '';
-    // const sales = process.env.EMAIL_SALES || '';
+    // const sales = process.env.EMAIL_USER || '';
+    const sales = process.env.EMAIL_SALES || '';
     const {
       name,
       phone,
@@ -381,8 +381,8 @@ export const contactus = async (req: Request, res: Response) => {
 export const contactusInterior = async (req: Request, res: Response) => {
   try {
     // console.log(req.body);
-    const sales = process.env.EMAIL_USER || '';
-    // const sales = process.env.EMAIL_SALES || '';
+    // const sales = process.env.EMAIL_USER || '';
+    const sales = process.env.EMAIL_SALES || '';
     const { name, phone, email, company, message } = req.body;
 
     const templatePath = path.join(

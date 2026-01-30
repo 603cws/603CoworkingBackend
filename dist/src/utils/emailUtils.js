@@ -168,7 +168,6 @@ const sendEmailAdmin = async (to, subject, text, html) => {
         //   pass: process.env.ADMIN_SALES,
         // },
     });
-    console.log('helloo this is yuvraj');
     let mailOptions = {
         from: process.env.EMAIL_USER,
         // from: process.env.EMAIL_ADMIN,

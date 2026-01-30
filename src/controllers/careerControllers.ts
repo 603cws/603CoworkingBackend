@@ -8,8 +8,8 @@ import fs from 'fs';
 
 export const sendJobCallBack = async (req: Request, res: Response) => {
   try {
-    const sales = process.env.EMAIL_USER || '';
-    // const sales = process.env.EMAIL_ADMIN || "";
+    // const sales = process.env.EMAIL_USER || '';
+    const sales = process.env.EMAIL_ADMIN || '';
     const { name, email, phone, position, experience } = req.body;
 
     const templatePath = path.join(

@@ -21,8 +21,8 @@ const getAllService = async (req, res) => {
 exports.getAllService = getAllService;
 const sendPartnershipEmail = async (req, res) => {
     try {
-        const sales = process.env.EMAIL_USER || '';
-        // const sales = process.env.EMAIL_SALES || "";
+        // const sales = process.env.EMAIL_USER || '';
+        const sales = process.env.EMAIL_SALES || '';
         const { email, name, phone, company, message } = req.body;
         const templatePath2 = path_1.default.join(__dirname, '../utils/partner.html');
         let htmlTemplate2 = fs_1.default.readFileSync(templatePath2, 'utf8');

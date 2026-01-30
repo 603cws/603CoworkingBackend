@@ -162,8 +162,8 @@ const checkauth = async (req, res) => {
 exports.checkauth = checkauth;
 const sendcallback = async (req, res) => {
     try {
-        const sales = process.env.EMAIL_USER || '';
-        // const sales = process.env.EMAIL_SALES || '';
+        // const sales = process.env.EMAIL_USER || '';
+        const sales = process.env.EMAIL_SALES || '';
         const { email, name, phone, company, requirements } = req.body;
         const templatePath = path_1.default.join(__dirname, '../utils/callbackuser.html');
         let htmlTemplate = fs_1.default.readFileSync(templatePath, 'utf8');
@@ -200,8 +200,8 @@ exports.sendcallback = sendcallback;
 const requestTour = async (req, res) => {
     try {
         //sales email
-        const sales = process.env.EMAIL_USER || '';
-        // const sales = process.env.EMAIL_SALES || '';
+        // const sales = process.env.EMAIL_USER || '';
+        const sales = process.env.EMAIL_SALES || '';
         //requested body
         const { name, email, phone, location, intrestedIn } = req.body;
         //email template for user
@@ -237,8 +237,8 @@ const requestTour = async (req, res) => {
 exports.requestTour = requestTour;
 const contactus = async (req, res) => {
     try {
-        const sales = process.env.EMAIL_USER || '';
-        // const sales = process.env.EMAIL_SALES || '';
+        // const sales = process.env.EMAIL_USER || '';
+        const sales = process.env.EMAIL_SALES || '';
         const { name, phone, email, location, seats, company, specifications, requirements, } = req.body;
         let data = {
             name,
@@ -280,8 +280,8 @@ exports.contactus = contactus;
 const contactusInterior = async (req, res) => {
     try {
         // console.log(req.body);
-        const sales = process.env.EMAIL_USER || '';
-        // const sales = process.env.EMAIL_SALES || '';
+        // const sales = process.env.EMAIL_USER || '';
+        const sales = process.env.EMAIL_SALES || '';
         const { name, phone, email, company, message } = req.body;
         const templatePath = path_1.default.join(__dirname, '../utils/callbackuserinterior.html');
         let htmlTemplate = fs_1.default.readFileSync(templatePath, 'utf8');

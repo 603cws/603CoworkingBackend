@@ -9,8 +9,8 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const sendJobCallBack = async (req, res) => {
     try {
-        const sales = process.env.EMAIL_USER || '';
-        // const sales = process.env.EMAIL_ADMIN || "";
+        // const sales = process.env.EMAIL_USER || '';
+        const sales = process.env.EMAIL_ADMIN || '';
         const { name, email, phone, position, experience } = req.body;
         const templatePath = path_1.default.join(__dirname, '../utils/candidatecareeremail.html');
         let htmlTemplate = fs_1.default.readFileSync(templatePath, 'utf8');

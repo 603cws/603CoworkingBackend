@@ -16,8 +16,8 @@ export const getAllService = async (req: Request, res: Response) => {
 
 export const sendPartnershipEmail = async (req: Request, res: Response) => {
   try {
-    const sales = process.env.EMAIL_USER || '';
-    // const sales = process.env.EMAIL_SALES || "";
+    // const sales = process.env.EMAIL_USER || '';
+    const sales = process.env.EMAIL_SALES || '';
     const { email, name, phone, company, message } = req.body;
 
     const templatePath2 = path.join(__dirname, '../utils/partner.html');
