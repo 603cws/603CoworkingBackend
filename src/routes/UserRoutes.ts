@@ -19,6 +19,7 @@ import {
   getuserDetailsByAdmin,
   requestTour,
   contactusInterior,
+  contactusEmail,
 } from '../controllers/UserControllers';
 import { admin } from '../middlewares/adminMiddleware';
 
@@ -37,6 +38,7 @@ router.get('/details/dashboard', admin, allusersbyadmin);
 router.get('/checkauth', checkauth);
 router.post('/sendcallback', sendcallback);
 router.post('/contactus', contactus);
+router.post('/contactusEmail', contactusEmail);
 router.post('/admin/updateuser', admin, updateuserbyadmin);
 router.post('/admin/deleteuser', admin, deleteuserbyadmin);
 
