@@ -18,6 +18,7 @@ router.get('/checkauth', UserControllers_1.checkauth);
 router.post('/sendcallback', UserControllers_1.sendcallback);
 router.post('/contactus', UserControllers_1.contactus);
 router.post('/contactusEmail', UserControllers_1.contactusEmail);
+router.post('/sattigoEnquiryEmail', UserControllers_1.sattigoEnquiryEmail);
 router.post('/admin/updateuser', adminMiddleware_1.admin, UserControllers_1.updateuserbyadmin);
 router.post('/admin/deleteuser', adminMiddleware_1.admin, UserControllers_1.deleteuserbyadmin);
 //get a particular user by admin

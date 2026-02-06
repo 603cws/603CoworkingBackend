@@ -20,6 +20,7 @@ import {
   requestTour,
   contactusInterior,
   contactusEmail,
+  sattigoEnquiryEmail,
 } from '../controllers/UserControllers';
 import { admin } from '../middlewares/adminMiddleware';
 
@@ -39,6 +40,7 @@ router.get('/checkauth', checkauth);
 router.post('/sendcallback', sendcallback);
 router.post('/contactus', contactus);
 router.post('/contactusEmail', contactusEmail);
+router.post('/sattigoEnquiryEmail', sattigoEnquiryEmail);
 router.post('/admin/updateuser', admin, updateuserbyadmin);
 router.post('/admin/deleteuser', admin, deleteuserbyadmin);
 

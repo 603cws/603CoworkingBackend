@@ -379,8 +379,6 @@ export const contactus = async (req: Request, res: Response) => {
 };
 export const contactusEmail = async (req: Request, res: Response) => {
   try {
-    // const sales = process.env.EMAIL_USER || '';
-    // const sales = 'manchadiyuvraj@gmail.com';
     const sales = process.env.EMAIL_SALES || '';
     const { email } = req.body;
 
@@ -393,6 +391,32 @@ export const contactusEmail = async (req: Request, res: Response) => {
       sales,
       'Customer is trying to contact',
       'A customer has raised a contact request.',
+      htmlContent2,
+    );
+
+    res.status(200).json({ msg: 'Request sent admin successfully!' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: 'Internal server error3' });
+  }
+};
+export const sattigoEnquiryEmail = async (req: Request, res: Response) => {
+  try {
+    const sales = process.env.EMAIL_SALES || '';
+    const { email, name, phone } = req.body;
+
+    const templatePath2 = path.join(__dirname, '../utils/sattigoenquiry.html');
+    let htmlTemplate2 = fs.readFileSync(templatePath2, 'utf8');
+
+    const htmlContent2 = htmlTemplate2
+      .replace('{{email}}', email)
+      .replace('{{name}}', name)
+      .replace('{{phone}}', phone);
+
+    await sendEmailSales(
+      sales,
+      'Customer is trying to contact',
+      'A client has a enquiry for Sattigo villa ',
       htmlContent2,
     );
 
