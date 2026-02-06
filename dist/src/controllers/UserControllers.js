@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getuserDetailsByAdmin = exports.dokyc = exports.allusersbyadmin = exports.deleteuserbyadmin = exports.updateuserbyadmin = exports.updateuser = exports.forgotPassword = exports.changeforgotpass = exports.changepasswordbyuser = exports.deleteuser = exports.userbyid = exports.getusers = exports.contactusInterior = exports.contactusEmail = exports.contactus = exports.requestTour = exports.sendcallback = exports.checkauth = exports.getuserdetails = exports.getuserdetailsorig = exports.createuser = void 0;
+exports.getuserDetailsByAdmin = exports.dokyc = exports.allusersbyadmin = exports.deleteuserbyadmin = exports.updateuserbyadmin = exports.updateuser = exports.forgotPassword = exports.changeforgotpass = exports.changepasswordbyuser = exports.deleteuser = exports.userbyid = exports.getusers = exports.contactusInterior = exports.sattigoEnquiryEmail = exports.contactusEmail = exports.contactus = exports.requestTour = exports.sendcallback = exports.checkauth = exports.getuserdetails = exports.getuserdetailsorig = exports.createuser = void 0;
 const user_model_1 = require("../models/user.model");
 const space_model_1 = require("../models/space.model");
 const types_1 = require("../zodTypes/types");
@@ -279,8 +279,6 @@ const contactus = async (req, res) => {
 exports.contactus = contactus;
 const contactusEmail = async (req, res) => {
     try {
-        // const sales = process.env.EMAIL_USER || '';
-        // const sales = 'manchadiyuvraj@gmail.com';
         const sales = process.env.EMAIL_SALES || '';
         const { email } = req.body;
         const templatePath2 = path_1.default.join(__dirname, '../utils/contactEmail.html');
@@ -295,6 +293,25 @@ const contactusEmail = async (req, res) => {
     }
 };
 exports.contactusEmail = contactusEmail;
+const sattigoEnquiryEmail = async (req, res) => {
+    try {
+        const sales = process.env.EMAIL_SALES || '';
+        const { email, name, phone } = req.body;
+        const templatePath2 = path_1.default.join(__dirname, '../utils/sattigoenquiry.html');
+        let htmlTemplate2 = fs_1.default.readFileSync(templatePath2, 'utf8');
+        const htmlContent2 = htmlTemplate2
+            .replace('{{email}}', email)
+            .replace('{{name}}', name)
+            .replace('{{phone}}', phone);
+        await (0, emailUtils_1.sendEmailSales)(sales, 'Customer is trying to contact', 'A client has a enquiry for Sattigo villa ', htmlContent2);
+        res.status(200).json({ msg: 'Request sent admin successfully!' });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: 'Internal server error3' });
+    }
+};
+exports.sattigoEnquiryEmail = sattigoEnquiryEmail;
 const contactusInterior = async (req, res) => {
     try {
         // console.log(req.body);
